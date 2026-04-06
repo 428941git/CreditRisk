@@ -1,25 +1,23 @@
 import streamlit as st
-from utils import utils
 
+st.set_page_config(
+    page_title="Credit risk modelling", 
+    layout="wide")
+col_spanned, col_tab = st.columns([4, 2])
 
-st.set_page_config(page_title="Credit risk modelling", layout="wide")
-
-mapping = {
+decileTypes = {
     "DTI": "debt_to_income",
     "Monthly income": "monthly_income",
     "Credit utilization": "credit_utilization"
 }
 
-selection = st.segmented_control(
+tabSelection = st.segmented_control(
     "Select Metric",
-    options=list(mapping.keys()),
+    options=list(decileTypes.keys()),
     default="DTI",
     label_visibility="collapsed"
 )
-
-sel_tab = mapping[selection]
-
-col_spanned, col_tab = st.columns([4, 2])
+selTab = decileTypes[tabSelection]
 
 with st.sidebar:
     st.header = "Variables"
@@ -33,11 +31,8 @@ with st.sidebar:
     cred_util = st.number_input("Credit utilization", min_value=0.0, max_value=1.0, value=0.5, step=0.01)
 
 
-
-viz,  percentile = utils.calc(sel_tab, selection, population_sample, dti_ratio, late_payments, job_years, m_income)
-
 with col_spanned:
-    st.plotly_chart(viz)
-    st.write(percentile)
+    st.plotly_chart() #here chart
+    st.write() #here matrix with values
 
 
