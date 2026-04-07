@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from functools import lru_cache
 
-
+#Edit that - dataset doesnt have any corr
 class CreditData:
     def __init__(self, seed: int = 42):
         self.seed = seed
@@ -41,6 +41,7 @@ class CreditData:
         #Behaviour
         recent_inquiries = np.clip(rng.poisson(lam=0.8, size=pop_sample), 0, 5)
         late_payments_12m = np.clip(rng.poisson(lam=late_payments, size=pop_sample), 0, 12)
+        
         #Creating DataFrame
         df = pd.DataFrame({
             "application_id": application_id,
@@ -66,4 +67,4 @@ if __name__ == "__main__":
         job_yrs=6,
         monthly_income=5000
     )
-    print(df)
+    print(df.corr())
